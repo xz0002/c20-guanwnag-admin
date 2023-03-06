@@ -2,7 +2,6 @@ package com.c20.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.c20.admin.entity.LocationInfo;
-import com.c20.admin.entity.vo.LocationInfoVo;
 import com.c20.admin.service.LocationInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +16,14 @@ public class LocationInfoController {
     @Autowired
     private LocationInfoService locationInfoService;
 
-    // 获取位置信息
+    // 根据经纬度获取位置信息
     @PostMapping("/getLocationInfo")
-    public ResponseEntity<LocationInfo> getLocationInfo(@RequestBody LocationInfoVo locationInfoVo) {
+    public ResponseEntity<LocationInfo> getLocationInfo(@RequestBody LocationInfo locationInfo) {
         QueryWrapper<LocationInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("latitude", locationInfoVo.getLatitude()).eq("longitude", locationInfoVo.getLongitude());
-        LocationInfo locationInfo = locationInfoService.getOne(queryWrapper);
-        if (locationInfo != null) {
-            return new ResponseEntity<>(locationInfo, HttpStatus.OK);
+        queryWrapper.eq("latitude", locationInfo.getLatitude()).eq("longitude", locationInfo.getLongitude());
+        LocationInfo info = locationInfoService.getOne(queryWrapper);
+        if (info != null) {
+            return new ResponseEntity<>(info, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
