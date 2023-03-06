@@ -1,19 +1,17 @@
-package com.c20.admin.entity;
+package com.c20.admin.entity.vo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-import java.io.Serializable;
-
 /**
- * @TableName image
+ * @author 辛老板
+ * @version 1.0.0
+ * @date 2023-03-06 13:25
  */
-@TableName(value = "image")
 @Data
-public class Image extends BaseRntity implements Serializable {
+public class ImageVo {
+
     /**
      * 主键id
      */
@@ -34,8 +32,4 @@ public class Image extends BaseRntity implements Serializable {
      * 文件描述
      */
     private String description;
-
-    @TableField(exist = false)
-    private static final long serialVersionUID = 1L;
-
 }

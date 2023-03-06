@@ -14,7 +14,7 @@ import java.math.BigDecimal;
  */
 @TableName(value = "location_info")
 @Data
-public class LocationInfo implements Serializable {
+public class LocationInfo extends BaseRntity implements Serializable {
     /**
      * 主键id
      */

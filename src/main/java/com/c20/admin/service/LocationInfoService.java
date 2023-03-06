@@ -1,5 +1,6 @@
 package com.c20.admin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.c20.admin.entity.LocationInfo;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -9,5 +10,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * @createDate 2023-03-06 10:52:19
  */
 public interface LocationInfoService extends IService<LocationInfo> {
+
+    IPage<LocationInfo> findPageList(Long page, Long size, String name, String address);
 
 }

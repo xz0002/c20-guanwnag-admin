@@ -1,73 +1,95 @@
 package com.c20.admin.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.c20.admin.entity.LocationInfo;
+import com.c20.admin.entity.vo.LocationInfoVo;
+import com.c20.admin.result.Result;
 import com.c20.admin.service.LocationInfoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/location")
 public class LocationInfoController {
 
+    Logger logger = LoggerFactory.getLogger(LocationInfoController.class);
+
     @Autowired
     private LocationInfoService locationInfoService;
 
     // 根据经纬度获取位置信息
-    @PostMapping("/getLocationInfo")
-    public ResponseEntity<LocationInfo> getLocationInfo(@RequestBody LocationInfo locationInfo) {
+    @PostMapping("/findLocationInfo")
+    public Result findLocationInfo(@RequestBody LocationInfoVo locationInfoVo) {
         QueryWrapper<LocationInfo> queryWrapper = new QueryWrapper<>();
-        queryWrapper.eq("latitude", locationInfo.getLatitude()).eq("longitude", locationInfo.getLongitude());
-        LocationInfo info = locationInfoService.getOne(queryWrapper);
-        if (info != null) {
-            return new ResponseEntity<>(info, HttpStatus.OK);
+        queryWrapper.eq("latitude", locationInfoVo.getLatitude()).eq("longitude", locationInfoVo.getLongitude());
+        LocationInfo locationInfo = locationInfoService.getOne(queryWrapper);
+        if (locationInfo != null) {
+            return Result.ok(locationInfo);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return Result.fail();
         }
     }
 
+    // 根据地区和名字模糊查询分页查询
+    @PostMapping("/findPageList/{page}/{size}")
+    public Result findPageList(@PathVariable Long page,
+                               @PathVariable Long size,
+                               @RequestBody LocationInfoVo locationInfoVo) {
+        if (page <= 0) page = 1L;
+        if (size <= 0) size = 10L;
+        // 名称
+        String name = locationInfoVo.getName();
+        logger.info("name: " + name);
+        // 详细信息
+        String address = locationInfoVo.getAddress();
+        logger.info("address: " + address);
+
+        IPage<LocationInfo> locationInfoIPage = locationInfoService.findPageList(page, size, name, address);
+        return Result.ok(locationInfoIPage);
+    }
+
+    // 根据id查询位置信息
+    @GetMapping("/findById")
+    public Result findById(@RequestParam Long id) {
+        QueryWrapper<LocationInfo> wrapper = new QueryWrapper<>();
+        wrapper.eq("id", id);
+        LocationInfo locationInfo = locationInfoService.getOne(wrapper);
+        return Result.ok(locationInfo);
+    }
+
     // 保存位置信息
-    @PostMapping("/saveLocationInfo")
-    public ResponseEntity saveLocationInfo(@RequestBody LocationInfo locationInfo) {
+    @PostMapping("/save")
+    public Result save(@RequestBody LocationInfo locationInfo) {
         boolean save = locationInfoService.save(locationInfo);
         if (save) {
-            return new ResponseEntity(HttpStatus.OK);
+            return Result.ok();
         } else {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return Result.fail();
         }
     }
 
     // 更新位置信息
-    @PostMapping("/updateLocationInfo")
-    public ResponseEntity updateLocationInfo(@RequestBody LocationInfo locationInfo) {
+    @PutMapping("/update")
+    public Result update(@RequestBody LocationInfo locationInfo) {
         boolean update = locationInfoService.updateById(locationInfo);
         if (update) {
-            return new ResponseEntity(HttpStatus.OK);
+            return Result.ok();
         } else {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return Result.fail();
         }
     }
 
     // 删除位置信息
-    @PostMapping("/deleteLocationInfo")
-    public ResponseEntity deleteLocationInfo(@RequestBody LocationInfo locationInfo) {
-        boolean remove = locationInfoService.removeById(locationInfo.getId());
+    @DeleteMapping("/remove")
+    public Result remove(@RequestParam Long id) {
+        boolean remove = locationInfoService.removeById(id);
         if (remove) {
-            return new ResponseEntity(HttpStatus.OK);
+            return Result.ok();
         } else {
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+            return Result.fail();
         }
-    }
-
-    // 上传/更新 位置图片
-    @PostMapping("/uploadLocationImg/{id}")
-    public ResponseEntity uploadLocationImg(MultipartFile file, @PathVariable Integer id) {
-        // TODO
-        // 文件上传功能
-        // 更新数据库对应url字段
-        return null;
     }
 }
