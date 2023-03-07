@@ -1,7 +1,6 @@
 package com.c20.admin.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
@@ -16,13 +15,11 @@ public class RolePermissions implements Serializable {
     /**
      * 角色ID
      */
-    @TableId
     private Long roleId;
 
     /**
      * 权限ID
      */
-    @TableId
     private Long permissionId;
 
     @TableField(exist = false)

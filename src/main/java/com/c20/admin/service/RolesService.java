@@ -3,6 +3,8 @@ package com.c20.admin.service;
 import com.c20.admin.entity.Roles;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
  * @author xin
  * @description 针对表【roles】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface RolesService extends IService<Roles> {
 
+    List<Roles> findRolesByUserId(Long userId);
 }

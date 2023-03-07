@@ -5,11 +5,15 @@
 <mapper namespace="com.c20.admin.mapper.UserRolesMapper">
 
     <resultMap id="BaseResultMap" type="com.c20.admin.entity.UserRoles">
-            <id property="userId" column="user_id" jdbcType="BIGINT"/>
-            <id property="roleId" column="role_id" jdbcType="BIGINT"/>
+        <id property="userId" column="user_id" jdbcType="BIGINT"/>
+        <id property="roleId" column="role_id" jdbcType="BIGINT"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        user_id,role_id
-    </sql>
+
+    <select id="selectUserIdsByRoleId" resultType="java.lang.Long">
+        SELECT ur.user_id
+        FROM user_roles ur
+        WHERE ur.role_id = #{roleId}
+    </select>
+
 </mapper>

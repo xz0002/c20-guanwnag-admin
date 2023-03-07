@@ -5,18 +5,21 @@
 <mapper namespace="com.c20.admin.mapper.PermissionsMapper">
 
     <resultMap id="BaseResultMap" type="com.c20.admin.entity.Permissions">
-            <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="name" column="name" jdbcType="VARCHAR"/>
-            <result property="description" column="description" jdbcType="VARCHAR"/>
-            <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
-            <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
-            <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
-            <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
+        <id property="id" column="id" jdbcType="BIGINT"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="description" column="description" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="TIMESTAMP"/>
+        <result property="updateTime" column="update_time" jdbcType="TIMESTAMP"/>
+        <result property="createBy" column="create_by" jdbcType="VARCHAR"/>
+        <result property="deleteFlag" column="delete_flag" jdbcType="INTEGER"/>
     </resultMap>
 
-    <sql id="Base_Column_List">
-        id,name,description,
-        create_time,update_time,create_by,
-        delete_flag
-    </sql>
+
+    <select id="findPermissionByRoleId" resultType="java.lang.Long">
+        SELECT rp.permission_id
+        FROM roles r
+                 JOIN role_permissions rp
+                      ON r.id = rp.role_id
+        WHERE r.id = #{rid}
+    </select>
 </mapper>

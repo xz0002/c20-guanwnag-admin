@@ -13,12 +13,19 @@ import javax.annotation.Resource;
  * @version 1.0.0
  * @date 2023-03-07 10:54
  */
+// 权限管理
 @RestController
 @RequestMapping("/permissions")
 public class PermissionsController {
 
     @Resource
     private PermissionsService permissionsService;
+
+    // 查询所有权限
+    @GetMapping("/findAll")
+    public Result findAll() {
+        return Result.ok(permissionsService.list());
+    }
 
     // 分页查询权限列表
     @PostMapping("/findPageList/{limit}/{size}")
@@ -37,14 +44,14 @@ public class PermissionsController {
     }
 
     // 修改权限
-    @PostMapping("/update")
+    @PutMapping("/update")
     public Result update(@RequestBody Permissions permissions) {
         permissionsService.updateById(permissions);
         return Result.ok();
     }
 
     // 删除权限
-    @PostMapping("/remove")
+    @DeleteMapping("/remove")
     public Result remove(@RequestParam Long id) {
         permissionsService.removeById(id);
         return Result.ok();

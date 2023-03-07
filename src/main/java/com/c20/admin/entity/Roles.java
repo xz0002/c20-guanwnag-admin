@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * @TableName roles
@@ -33,4 +34,11 @@ public class Roles extends BaseRntity implements Serializable {
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
+    // 角色与用户属于一对多关系，所以这里需要使用集合，数据库中不需要此字段
+    @TableField(exist = false)
+    private List<Users> usersList;
+
+    // 角色与权限属于多对多关系
+    @TableField(exist = false)
+    private List<Permissions> permissionsList;
 }

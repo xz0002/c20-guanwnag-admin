@@ -6,6 +6,9 @@ import com.c20.admin.service.RolesService;
 import com.c20.admin.mapper.RolesMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @author xin
  * @description 针对表【roles】的数据库操作Service实现
@@ -14,6 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class RolesServiceImpl extends ServiceImpl<RolesMapper, Roles> implements RolesService {
 
+    @Resource
+    private RolesMapper rolesMapper;
+
+    @Override
+    public List<Roles> findRolesByUserId(Long userId) {
+        List<Long> users = rolesMapper.findRolesByUserId(userId);
+        return this.listByIds(users);
+    }
 }
 
 

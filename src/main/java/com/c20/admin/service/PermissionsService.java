@@ -1,7 +1,9 @@
 package com.c20.admin.service;
 
-import com.c20.admin.entity.Permissions;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.c20.admin.entity.Permissions;
+
+import java.util.List;
 
 /**
  * @author xin
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface PermissionsService extends IService<Permissions> {
 
+    List<Permissions> findPermissionByRoleId(Long rid);
 }

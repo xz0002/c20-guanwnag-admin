@@ -1,7 +1,9 @@
 package com.c20.admin.service;
 
-import com.c20.admin.entity.Users;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.c20.admin.entity.Users;
+
+import java.util.List;
 
 /**
  * @author xin
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface UsersService extends IService<Users> {
 
+    List<Users> findUsersByRoleId(Long roleId);
 }

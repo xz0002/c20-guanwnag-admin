@@ -6,6 +6,9 @@ import com.c20.admin.service.PermissionsService;
 import com.c20.admin.mapper.PermissionsMapper;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
 /**
  * @author xin
  * @description 针对表【permissions】的数据库操作Service实现
@@ -14,6 +17,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class PermissionsServiceImpl extends ServiceImpl<PermissionsMapper, Permissions> implements PermissionsService {
 
+    @Resource
+    static PermissionsMapper permissionsMapper;
+
+    @Override
+    public List<Permissions> findPermissionByRoleId(Long rid) {
+        List<Long> ids = permissionsMapper.findPermissionByRoleId(rid);
+        return this.listByIds(ids);
+    }
 }
 
 
