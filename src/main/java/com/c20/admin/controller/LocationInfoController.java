@@ -35,9 +35,7 @@ public class LocationInfoController {
 
     // 根据地区和名字模糊查询分页查询
     @PostMapping("/findPageList/{page}/{size}")
-    public Result findPageList(@PathVariable Long page,
-                               @PathVariable Long size,
-                               @RequestBody LocationInfoVo locationInfoVo) {
+    public Result findPageList(@PathVariable Long page, @PathVariable Long size, @RequestBody LocationInfoVo locationInfoVo) {
         if (page <= 0) page = 1L;
         if (size <= 0) size = 10L;
         // 名称

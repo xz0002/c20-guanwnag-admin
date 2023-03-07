@@ -38,9 +38,7 @@ public class ImageController {
 
     // 根据文件名称和描述模糊分页查询
     @PostMapping("/findPageList/{page}/{size}")
-    public Result findPageList(@PathVariable Long page,
-                               @PathVariable Long size,
-                               @RequestBody ImageVo imageVo) {
+    public Result findPageList(@PathVariable Long page, @PathVariable Long size, @RequestBody ImageVo imageVo) {
         if (page <= 0) page = 1L;
         if (size <= 0) size = 10L;
 
