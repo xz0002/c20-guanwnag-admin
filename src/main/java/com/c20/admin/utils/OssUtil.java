@@ -68,8 +68,6 @@ public class OssUtil {
                 downloadDirFile.mkdir();
                 ossClient.getObject(new GetObjectRequest(bucketName, url), downloadDirFile);
             }
-
-
         } catch (OSSException oe) {
             System.out.println("Caught an OSSException, which means your request made it to OSS, "
                     + "but was rejected with an error response for some reason.");

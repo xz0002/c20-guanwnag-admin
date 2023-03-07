@@ -69,8 +69,16 @@
             <option name="tableUIInfoList">
               <list>
                 <TableUIInfo>
-                  <option name="className" value="Image" />
-                  <option name="tableName" value="image" />
+                  <option name="className" value="Permissions" />
+                  <option name="tableName" value="permissions" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="Roles" />
+                  <option name="tableName" value="roles" />
+                </TableUIInfo>
+                <TableUIInfo>
+                  <option name="className" value="Users" />
+                  <option name="tableName" value="users" />
                 </TableUIInfo>
               </list>
             </option>
